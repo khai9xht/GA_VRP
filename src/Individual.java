@@ -6,12 +6,22 @@ class  Individual{
     int[] gen = new int[Setup_VRP.getDimension()];
     int[] Transport = new int[Setup_VRP.getDimension()];
     private int total_distance;
+    private int total_transport;
 
 
     public Individual(){
         gen[0] = 0;
-        Transport[0] = 0;
+        total_transport = 0;
         total_distance = 0;
+    }
+
+    public int get_Distance(int i, int j){
+        int distance = 0;
+        for (int k = i+1; k < j; k++) {
+            distance += Setup_VRP.Distance[gen[k]][gen[k + 1]];
+        }
+        distance += Setup_VRP.Distance[0][gen[i+1]] + Setup_VRP.Distance[gen[j]][0];
+        return distance;
     }
 
     public void Greedy(){
@@ -45,6 +55,7 @@ class  Individual{
 
     public void split(){
         int[] V = new int[gen.length];
+        int[] P = new int[gen.length];
         V[0] = 0;
         for (int i=1;i<gen.length;i++){
             V[i] = MAX_VALUE;
@@ -64,13 +75,21 @@ class  Individual{
                 if(capacity < Setup_VRP.getCapacity()){
                     if(V[i-1] + distance < V[j]) {
                         V[j] = V[i - 1] + distance;
-                        Transport[j] = i - 1;
+                        P[j] = i - 1;
                     }
                 }
                 j++;
             }while(j < gen.length && capacity < Setup_VRP.getCapacity());
         }
         total_distance = V[gen.length-1];
+        int k = gen.length-1;
+        while(k > 0){
+            for(int i = k; i > P[k]; i--){
+                Transport[i] = total_transport;
+            }
+            total_transport++;
+            k = P[k];
+        }
     }
 
     public void local_search(){

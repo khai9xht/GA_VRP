@@ -134,6 +134,15 @@ public class Setup_VRP {
                 }
             }
         }
+
+        if(next1 == 0){
+            PointGone[next2] = true;
+            return next2;
+        }
+        if(next2 == 0){
+            PointGone[next1] = true;
+            return next1;
+        }
         Random rd = new Random();
         if(rd.nextInt(2)==0){
             PointGone[next1] = true;

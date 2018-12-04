@@ -5,11 +5,15 @@ public class test {
        Individual x = new Individual();
        Individual y = new Individual();
        x.Greedy();
-       y.Greedy();
-       System.out.println(x);
-       System.out.println(y);
-       Individual z = a.Crossover(x,y);
-       System.out.println(z);
-        System.out.println(z.getTotal_distance());
+       x.split();
+        for(int i=0;i<x.gen.length;i++){
+            System.out.print(x.gen[i]+" ");
+        }
+        System.out.println();
+        for(int i=0;i<x.gen.length;i++){
+            System.out.print(x.Transport[i]+" ");
+        }
+        System.out.println();
+        System.out.println(x.getTotal_distance());
     }
 }
