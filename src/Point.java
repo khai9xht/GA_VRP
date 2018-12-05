@@ -30,7 +30,7 @@ public class Point {
         return (int) Math.sqrt((this.x - A.x)*(this.x - A.x) + (this.y - A.y)*(this.y - A.y));
     }
 
-    public boolean cut(Point A1, Point A2, Point B1, Point B2){
+    public static boolean cut(Point A1, Point A2, Point B1, Point B2){
         int m = ((A1.y - A2.y)*(B1.x - A1.x) - (A1.x - A2.x)*(B1.y - A1.y))*((A1.y - A2.y)*(B2.x - A1.x) - (A1.x - A2.x)*(B2.y - A1.y));
         int n = ((B1.y - B2.y)*(A1.x - B1.x) - (B1.x - B2.x)*(A1.y - B1.y))*((B1.y - B2.y)*(A2.x - B1.x) - (B1.x - B2.x)*(A2.y - B1.y));
         return m < 0 && n < 0;

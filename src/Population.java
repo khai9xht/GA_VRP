@@ -7,13 +7,18 @@ public class Population {
     protected Individual[] individuals = new Individual[total_Individual];
     protected double[] Probabilities = new double[total_Individual];
     protected int SmallesTotalDistance = MAX_VALUE;
+    protected Individual fitness;//best solution
 
 
     public void set_SmallesTotalDistance(){
+        int index = 0;
         for(int i=1;i<total_Individual;i++){
-            if(SmallesTotalDistance > individuals[i].getTotal_distance())
+            if(SmallesTotalDistance > individuals[i].getTotal_distance()) {
                 SmallesTotalDistance = individuals[i].getTotal_distance();
+                index = i;
+            }
         }
+        fitness = individuals[index];
     }
 
 
@@ -21,10 +26,10 @@ public class Population {
         double total = 0;
         double total_probability = 100;
         for(int i=0; i<total_Individual;i++){
-            total += individuals[i].getTotal_distance();
+            total += 1.0/individuals[i].getTotal_distance();
         }
         for(int i=0; i<total_Individual-1;i++){
-            Probabilities[i] = individuals[i].getTotal_distance()/total*100;
+            Probabilities[i] = (100.0/individuals[i].getTotal_distance())/total;
             total_probability -= Probabilities[i];
         }
         Probabilities[total_Individual-1] = total_probability;
@@ -32,7 +37,7 @@ public class Population {
 
     public Individual Selection(){
         Random rd = new Random();
-        int radius = rd.nextInt(100)+1;
+        double radius = rd.nextDouble()*100;
         int index = 0;
         while(radius > 0 && index < total_Individual){
             radius -= Probabilities[index];
@@ -79,6 +84,16 @@ public class Population {
        }
         Child.split();
         return Child;
+    }
+
+    public void re_create(Individual x){
+        for(int i=0; i<total_Individual; i++){
+            if(Probabilities[i] < 100.0/total_Individual){
+                individuals[i] = x;
+                Probabilities[i] = 100.0/total_Individual+1;
+                break;
+            }
+        }
     }
 
     public int getSmallesTotalDistance() { return SmallesTotalDistance; }

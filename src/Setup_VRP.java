@@ -44,8 +44,10 @@ public class Setup_VRP {
     }
     private void addDemand(String str,int j){
         int x1 = str.indexOf("\t");
-        int x2 = str.indexOf("\t",x1+1);
-        String str1 = str.substring(x1+1,x2);
+       // int x2 = str.indexOf("\t",x1+1);
+        String str1;
+        if(str.charAt(str.length()-1) == '\t') str1 = str.substring(x1+1,str.length()-1);
+        else str1 = str.substring(x1+1);
         int demand = Integer.parseInt(str1);
         Demand[j] = demand;
     }

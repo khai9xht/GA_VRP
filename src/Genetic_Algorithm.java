@@ -28,20 +28,25 @@ public class Genetic_Algorithm {
         Child_21.local_search();
         Child_22.local_search();
     }
-    public void re_create(){
+    public void re_createAll(){
+        population.re_create(Child_11);
+        population.re_create(Child_12);
+        population.re_create(Child_22);
+        population.re_create(Child_21);
         population.set_SmallesTotalDistance();
         population.set_Probabilities();
+
     }
     public Genetic_Algorithm(){
         int i=0;
-        while(i < 500){
+        while(i < 400){
             Selection_All();
             Crossover_All();
             LocalSearchAll();
-            re_create();
+            re_createAll();
             i++;
         }
-        System.out.print( population.getSmallesTotalDistance());
+        System.out.print( population.fitness);
 
     }
 
