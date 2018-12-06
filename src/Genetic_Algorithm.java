@@ -39,7 +39,7 @@ public class Genetic_Algorithm {
     }
     public Genetic_Algorithm(){
         int i=0;
-        while(i < 400){
+        while(i < 50){
             Selection_All();
             Crossover_All();
             LocalSearchAll();

@@ -23,32 +23,32 @@ class  Individual{
         distance += Setup_VRP.Distance[0][gen[i+1]] + Setup_VRP.Distance[gen[j]][0];
         return distance;
     }
-    public void update_distance() {
+
+    public void update_distance(){
         int[] V = new int[gen.length];
         V[0] = 0;
-        for (int i = 1; i < gen.length; i++) {
+        for (int i=1;i<gen.length;i++){
             V[i] = MAX_VALUE;
         }
         int j, capacity;
         int distance = 0;
-        for (int i = 1; i < gen.length; i++) {
-            j = i;
-            capacity = 0;
+        for (int i=1;i<gen.length;i++){
+            j = i;  capacity = 0;
             do {
                 capacity += Setup_VRP.Demand[j];
-                if (i == j) {
-                    distance = Setup_VRP.Distance[gen[j]][gen[0]] * 2;
-                } else {
-                    distance = distance - Setup_VRP.Distance[gen[j - 1]][0]
-                            + Setup_VRP.Distance[gen[j - 1]][gen[j]] + Setup_VRP.Distance[gen[j]][0];
+                if(i == j){
+                    distance = Setup_VRP.Distance[gen[j]][gen[0]]*2;
+                }else{
+                    distance  = distance - Setup_VRP.Distance[gen[j-1]][0]
+                            + Setup_VRP.Distance[gen[j-1]][gen[j]] + Setup_VRP.Distance[gen[j]][0];
                 }
-                if (capacity < Setup_VRP.getCapacity()) {
-                    if (V[i - 1] + distance < V[j]) {
+                if(capacity < Setup_VRP.getCapacity()){
+                    if(V[i-1] + distance < V[j]) {
                         V[j] = V[i - 1] + distance;
                     }
                 }
                 j++;
-            } while (j < gen.length && capacity < Setup_VRP.getCapacity());
+            }while(j < gen.length && capacity < Setup_VRP.getCapacity());
         }
         total_distance = V[gen.length-1];
     }
@@ -125,15 +125,15 @@ class  Individual{
 
     public void swap(int i, int j){
         int s = total_distance;
-        int temp = gen[j];
-        gen[j] = gen[i];
-        gen[i] = temp;
-        update_distance();
-        if( s < total_distance){
-            temp = gen[j];
+            int temp = gen[j];
             gen[j] = gen[i];
             gen[i] = temp;
             update_distance();
+        if(s < total_distance){
+            temp = gen[j];
+            gen[j] = gen[i];
+            gen[i] = temp;
+            total_distance = s;
         }
     }
 
